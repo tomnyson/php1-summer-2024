@@ -1,0 +1,14 @@
+h1 {
+    text-align: center;
+    color: pink;
+}
+form {
+ margin-left: 50px;
+ margin-top: 30px;
+ 
+
+}
+
+.text-error {
+    color: red !important ;
+}
