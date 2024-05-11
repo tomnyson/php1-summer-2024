@@ -1,8 +1,7 @@
 <?php
 
-namespace opp;
 
-class Nguoi
+class Nguoi1
 {
     public $ten;
     public $tuoi;
