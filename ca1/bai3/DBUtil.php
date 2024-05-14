@@ -1,21 +1,26 @@
 <?php
 include "Database.php";
+define("HOST", "localhost");
+define("DB_NAME", "php1-spring-2024");
+define("USERNAME", "root");
+define("PASSWORD", "");
 class DBUntil
 {
     /**x
      * xay dung ham CRUD
      */
     private $connection = null;
-    function __construct($host, $username, $password, $dbname)
+    function __construct()
     {
-        $db = new Database($host, $username, $password, $dbname);
+        $db = new Database(HOST, USERNAME, PASSWORD, DB_NAME);
         $this->connection = $db->getConnection();
     }
     public function select($sql, $params = [])
     {
         $stmt = $this->connection->prepare($sql);
         $stmt->execute($params);
-        return $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll();
     }
     public function insert($table, $data)
     {
@@ -59,6 +64,7 @@ class DBUntil
     public function delete($table, $condition)
     {
         $sql = "DELETE FROM $table WHERE $condition";
+        var_dump($sql);
         $stmt = $this->connection->prepare($sql);
         $stmt->execute();
         return $stmt->rowCount();
