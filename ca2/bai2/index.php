@@ -1,8 +1,8 @@
 <?php
 
-use user\User as UserAlias;
-use admin\User as AdminAlias;
-use company\Company as companyAlias;
+use User\User as UserAlias;
+use Admin\User as AdminAlias;
+use Company\Company as companyAlias;
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
