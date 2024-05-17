@@ -19,4 +19,16 @@ class DBUtils
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         return $stmt->fetchAll();
     }
+    public function delete($table, $where)
+    {
+        /**
+         * table categories delete id = 3
+         * delete from categories where id = 3;
+         *
+         */
+        $sql = "DELETE FROM $table WHERE $where";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
 }

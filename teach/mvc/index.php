@@ -17,7 +17,7 @@ $lang = $_GET['lang'] ?? $config['default_language'];
 
 // Simple routing
 if ($request == '/' || $request == '/index') {
-    $controller = new \Controllers\HomeController();
+    $controller = new Controllers\HomeController();
     $controller->index($translations);
 } else {
     http_response_code(404);
