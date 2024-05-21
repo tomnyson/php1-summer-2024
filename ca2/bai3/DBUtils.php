@@ -13,9 +13,9 @@ class DBUtils
         var_dump($sql);
         $stmt = $this->connection->prepare($sql);
         $stmt->execute($params);
-        echo "<pre>";
-        var_dump($stmt);
-        echo "</pre>";
+        // echo "<pre>";
+        // var_dump($stmt);
+        // echo "</pre>";
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         return $stmt->fetchAll();
     }
@@ -30,5 +30,21 @@ class DBUtils
         $stmt = $this->connection->prepare($sql);
         $stmt->execute();
         return $stmt->rowCount();
+    }
+    public function insert($table, $data)
+    {
+        $keys = array_keys($data);
+        $fields = implode(", ", $keys);
+        $placeholders = ":" . implode(", :", $keys);
+        /**
+         * insert into categories(name) values (:name)
+         */
+        $sql = "INSERT INTO $table ($fields) VALUES ($placeholders)";
+        $stmt = $this->connection->prepare($sql);
+        foreach ($data as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+        $stmt->execute();
+        return $this->connection->lastInsertId();
     }
 }
