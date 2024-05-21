@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', '1');
 include "Database.php";
 define("HOST", "localhost");
 define("DB_NAME", "php1-spring-2024");
@@ -22,6 +23,7 @@ class DBUntil
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         return $stmt->fetchAll();
     }
+
     public function insert($table, $data)
     {
         /** 
@@ -34,6 +36,7 @@ class DBUntil
         $fields = implode(", ", $keys);
         $placeholders = ":" . implode(", :", $keys);
         $sql = "INSERT INTO $table ($fields) VALUES ($placeholders)";
+        var_dump($sql);
         // insert into Category ( name , id ) Values ( ":name" , :id )
         $stmt = $this->connection->prepare($sql);
 
