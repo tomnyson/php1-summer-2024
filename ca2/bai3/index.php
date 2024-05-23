@@ -3,7 +3,7 @@ ini_set('display_errors', '1');
 include "./DBUtils.php";
 
 $dbHelper = new DBUtils();
-$categories  = $dbHelper->select("select * from categories");
+
 // var_dump($categories);
 
 $errors = [];
@@ -46,7 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
     <title>DEMO CRUD</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
@@ -72,21 +73,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($categories as $row) : ?>
-                    <tr>
-                        <td><?= $row['id']; ?></td>
-                        <td><?= $row['name']; ?></td>
-                        <td>
-                            <form method="post" action="index.php?id=<?= $row['id'] ?>">
-                                <input type="hidden" name="id" value="<?= $row['id'] ?>" />
-                                <button type="submit" class="btn btn-danger" name="action" value="delete" type="button">delete</button>
-                                <a class="btn btn-info" href="update.php?id=<?= $row['id'] ?>">edit</a>
-                            </form>
+                <?php 
+                $categories  = $dbHelper->select("select * from categories");
+                foreach ($categories as $row) : ?>
+                <tr>
+                    <td><?= $row['id']; ?></td>
+                    <td><?= $row['name']; ?></td>
+                    <td>
+                        <form method="post" action="index.php?id=<?= $row['id'] ?>">
+                            <input type="hidden" name="id" value="<?= $row['id'] ?>" />
+                            <button type="submit" class="btn btn-danger" name="action" value="delete"
+                                type="button">delete</button>
+                            <a class="btn btn-info" href="update.php?id=<?= $row['id'] ?>">edit</a>
+                        </form>
 
 
-                        </td>
+                    </td>
 
-                    </tr>
+                </tr>
                 <?php endforeach; ?>
 
             </tbody>

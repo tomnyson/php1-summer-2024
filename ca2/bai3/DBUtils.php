@@ -47,4 +47,25 @@ class DBUtils
         $stmt->execute();
         return $this->connection->lastInsertId();
     }
+
+    public function update($table, $data, $condition)
+    {   
+        /**
+         * ['name' => 'abc']
+         */
+        // update categories set name =  :name where id = 1
+        $updateFields = [];
+        foreach ($data as $key => $value) {
+            $updateFields[] = "$key = :$key";
+        }
+        $updateFields = implode(", ", $updateFields);
+        $sql = "UPDATE $table SET $updateFields WHERE $condition";
+        $stmt = $this->connection->prepare($sql);
+
+        foreach ($data as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
 }
