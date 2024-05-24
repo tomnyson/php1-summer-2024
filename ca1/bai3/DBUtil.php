@@ -5,6 +5,7 @@ define("HOST", "localhost");
 define("DB_NAME", "php1-spring-2024");
 define("USERNAME", "root");
 define("PASSWORD", "");
+
 class DBUntil
 {
     /**x
