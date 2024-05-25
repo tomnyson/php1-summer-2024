@@ -7,6 +7,12 @@ function isVietnamesePhoneNumber($number)
     return preg_match('/^(03|05|07|08|09|01[2689])[0-9]{8}$/', $number) === 1;
 }
 
+function ischeckmail($email)
+{
+    $dbHelper = new DBUntil();
+    return $dbHelper->select("SELECT email FROM users WHERE email") !== $email;
+}
+
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     var_dump($_POST);
@@ -21,6 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = "Invalid email format";
         } else {
+            if (ischeckmail($_POST["email"])) {
+                $errors['email'] = "email da ton tai";
+            }
             $email = $_POST['email'];
         }
     }
@@ -51,6 +60,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!isset($_POST['status']) || empty($_POST['status'])) {
         $errors['status'] = "status is required";
     } else {
-        $role = $_POST['status'];
+        $status = $_POST['status'];
+    }
+    if (count($errors) == 0) {
+        $isCreate = $dbHelper->insert('users', array(
+            "username" => $username,
+            "password" => $password,
+            "email" => $email,
+            "role" => $role,
+            "address" => $address,
+            "phone" => $phone,
+            "status" => $status
+        ));
+        var_dump($isCreate);
     }
 }

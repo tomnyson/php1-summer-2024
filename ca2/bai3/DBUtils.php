@@ -1,5 +1,5 @@
 <?php
-include "./database.php";
+include __DIR__ . "/database.php";
 class DBUtils
 {
     private $connection = null;
@@ -49,7 +49,7 @@ class DBUtils
     }
 
     public function update($table, $data, $condition)
-    {   
+    {
         /**
          * ['name' => 'abc']
          */
