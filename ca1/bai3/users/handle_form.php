@@ -10,12 +10,21 @@ function isVietnamesePhoneNumber($number)
 function ischeckmail($email)
 {
     $dbHelper = new DBUntil();
-    return $dbHelper->select("SELECT email FROM users WHERE email") !== $email;
+    $email =  $dbHelper->select("SELECT email FROM users WHERE email = ?", [$email]);
+    var_dump($email);
+    if (count($email) > 0) {
+        return true;
+    }
+    return false;
 }
 
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     var_dump($_POST);
+    echo "<br/>";
+    echo "<pre>";
+    var_dump($_FILES);
+    echo "</pre>";
     if (!isset($_POST['username']) || empty($_POST['username'])) {
         $errors['username'] = "username is required";
     } else {
@@ -29,8 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             if (ischeckmail($_POST["email"])) {
                 $errors['email'] = "email da ton tai";
+            } else {
+                $email = $_POST['email'];
             }
-            $email = $_POST['email'];
         }
     }
     if (!isset($_POST['password']) || empty($_POST['password'])) {
@@ -62,13 +72,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $status = $_POST['status'];
     }
+    if (isset($_FILES['avatar']) && !$_FILES['avatar']['error'] > UPLOAD_ERR_OK) {
+        $target_dir = __DIR__ . "/uploads/";
+        $target_file = $target_dir . basename($_FILES["avatar"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        $IMAGE_TYPES = array('jpg', 'jpeg', 'png');
+
+        if (file_exists($target_file)) {
+            echo "Sorry, file already exists.";
+            $errors['avatar'] = "folder upload not found";
+        }
+
+        if (!in_array($imageFileType, $IMAGE_TYPES)) {
+            $errors['avatar'] = "avatar type must is image format";
+        }
+
+        if (
+            $_FILES['avatar']["size"] > 1000000
+        ) {
+            $errors['avatar'] = "avatar too large";
+        }
+        // check type
+
+        var_dump($imageFileType);
+        /**
+         *  type file allow image [jpeg, png, jpg]
+         *  type size: 5M
+         */
+    } else {
+        $avatar = null;
+    }
+
     if (count($errors) == 0) {
+        $avatar = null;
+        // upload image to server
+        if (isset($_FILES['avatar']) && !$_FILES['avatar']['error'] > UPLOAD_ERR_OK) {
+            if (move_uploaded_file($_FILES["avatar"]["tmp_name"], $target_file)) {
+                $avatar = htmlspecialchars(basename($_FILES["avatar"]["name"]));
+                echo "The file " . htmlspecialchars(basename($_FILES["avatar"]["name"])) . " has been uploaded.";
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+            }
+        }
+
         $isCreate = $dbHelper->insert('users', array(
             "username" => $username,
             "password" => $password,
             "email" => $email,
             "role" => $role,
             "address" => $address,
+            "avatar" => $avatar,
             "phone" => $phone,
             "status" => $status
         ));

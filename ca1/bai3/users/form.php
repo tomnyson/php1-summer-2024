@@ -1,4 +1,4 @@
-<form action="create.php" method="post">
+<form action="create.php" method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">username</label>
         <input class="form-control" type="text" name="username" placeholder="username">
@@ -14,6 +14,15 @@
         <?php
         if (isset($errors['password'])) {
             echo "<span class='error'>$errors[password]</span>";
+        }
+        ?>
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">avatar</label>
+        <input class="form-control" type="file" name="avatar" placeholder="avatar">
+        <?php
+        if (isset($errors['avatar'])) {
+            echo "<span class='error'>$errors[avatar]</span>";
         }
         ?>
     </div>
@@ -72,24 +81,6 @@
             </label>
         </div>
     </div>
-    <?php
-    if (isset($errors['status'])) {
-        echo "<span class='error'>$errors[status]</span>";
-    }
-    if (empty($errors)) {
-        if (isset($username) && isset($password) && isset($email) && isset($address) && isset($phone)) {
-            $isCreate = $dbHelper->insert('users', array(
-                'username' => $username,
-                'password' => $password,
-                'email' => $email,
-                'address' => $address,
-                'phone' => $phone,
-            ));
-                // header("Location: " . $_SERVER['PHP_SELF']);
-                // exit();
-        }
-    }
-    ?>
     <input type="submit" class="btn btn-success mt-3" value="Change">
     <!--  -->
 </form>
