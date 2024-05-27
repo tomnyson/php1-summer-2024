@@ -5,7 +5,6 @@ ini_set('display_errors', '1');
 $dbHelper = new DBUntil();
 
 $users = $dbHelper->select("select * from users");
-var_dump($users);
 $errors = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_POST["name"]) || empty($_POST['name'])) {
@@ -18,7 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
          *  call insert db utils
          */
         $isCreate = $dbHelper->insert('users', array('name' => $_POST['name']));
-        var_dump($isCreate);
     }
 }
 ?>

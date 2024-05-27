@@ -10,7 +10,6 @@ class DBUtils
     }
     public function select($sql, $params = [])
     {
-        var_dump($sql);
         $stmt = $this->connection->prepare($sql);
         $stmt->execute($params);
         // echo "<pre>";
