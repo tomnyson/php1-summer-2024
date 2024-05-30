@@ -1,3 +1,6 @@
+<?php
+require_once('./user.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,13 +16,15 @@
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+    <style>
+        form.user .form-control-user {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body class="bg-gradient-primary">
@@ -43,15 +48,26 @@
                                         <p class="mb-4">We get it, stuff happens. Just enter your email address below
                                             and we'll send you a link to reset your password!</p>
                                     </div>
-                                    <form class="user">
+                                    <form action="" method="post" class="user">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                            <input type="email" readonly name="email" class="form-control form-control-user" value="<?php if (isset($_GET['email'])) {
+                                                                                                                                        echo $_GET['email'];
+                                                                                                                                    } else {
+                                                                                                                                        echo "";
+                                                                                                                                    }
+                                                                                                                                    ?>" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." />
+                                            <input type="text" name="otp" class="form-control form-control-user" id="exampleInputEmail mb-3" aria-describedby="emailHelp" placeholder="Enter otp 6 number" />
+                                            <input type="password" name="password" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Password change" />
+                                            <?php
+                                            if (isset($errors['email'])) {
+                                                echo "<span class='text-danger'>$errors[email]</span>";
+                                            }
+                                            ?>
+
                                         </div>
-                                        <a href="login.html" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" name="action" value="reset" class="btn btn-primary btn-user btn-block">
                                             Reset Password
-                                        </a>
+                                        </button>
                                     </form>
                                     <hr>
                                     <div class="text-center">
