@@ -56,14 +56,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $vaitro = 'admin';
                 }
                 echo "<tr>";
-                echo "<td>$user[id]</td>";
+                echo "<td>$user[maKH]</td>";
                 echo "<td>$user[username]</td>";
                 echo "<td>$user[tenKH]</td>";
                 echo "<td>$user[email]</td>";
-                echo "<td>$user[phone]</td>";
+                echo "<td>$user[sdt]</td>";
                 echo "<td>$vaitro</td>";
-                echo "<td> <a class='btn btn-danger' href='delete.php?id=$user[id]'>remove</a>
-                    <a class='btn btn-info' href='update.php?id=$user[id]'>update</a>
+                echo "<td> <a class='btn btn-danger' href='delete.php?id=$user[maKH]'>remove</a>
+                    <a class='btn btn-info' href='update.php?id=$user[maKH]'>update</a>
                 </td>";
                 echo "</tr>";
             }

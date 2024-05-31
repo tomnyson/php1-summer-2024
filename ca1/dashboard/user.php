@@ -64,7 +64,7 @@ function resetPassword()
         var_dump($isCheck);
         if ($isCheck && count($isCheck) > 0) {
         } else {
-            $errors['email'] = "email not exist";
+            $errors['error'] = "email not exist";
         }
     }
 }

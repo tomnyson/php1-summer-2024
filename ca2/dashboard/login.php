@@ -13,14 +13,16 @@
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <style>
-        .red {
-            color: red;
-        }
+    .red {
+        color: red;
+    }
     </style>
 </head>
 
@@ -30,9 +32,13 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
     session_start();
-    include_once('./provider.php');
+    ini_set('display_errors', '1');
+    include_once('./DBUtil.php');
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $dbHelper = new DBUntil();
+
+    function validate_login()
+    {
         $errors = [];
         if (isset($_POST['username'])) {
             if (empty($_POST['username'])) {
@@ -48,33 +54,43 @@
                 }
             }
         }
+        return $errors;
+    }
 
-        if (isset($conn) && count($errors) == 0) {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $errors = validate_login();
+        var_dump($errors);
+
+        if (count($errors) == 0) {
             // xử lý login thanh conf
-            $query = "select * from users where username = :username and password = :password";
-            $statement = $conn->prepare($query);
-            $statement->execute([
-                'username' => $_POST['username'],
-                'password' => $_POST['password'],
-            ]);
-            $statement->setFetchMode(PDO::FETCH_ASSOC);
-            $result = $statement->fetchAll();
+            $result = $dbHelper->select(
+                "select * from users where username = :username",
+                array(
+                    'username' => $_POST['username'],
+                )
+            );
             var_dump($result);
             if (count($result) > 0) {
-                // xu ly dang nhap thanh cong
-                $_SESSION["username"] = $_POST["username"];
-                header("Location: index.php");
+                /**
+                 * check password correct
+                 */
+
+                if (password_verify($_POST['password'], $result[0]['password'])) {
+                    $_SESSION["username"] = $_POST["username"];
+                    header("Location: index.php");
+                } else {
+                    $errors['message'] = 'username or password incorrect';
+                    // xu ly dang nhap thanh cong
+
+                }
             }
         }
     }
 
-
-
+    echo "<h2>Login</h2>";
+    echo password_hash('123456', PASSWORD_DEFAULT)
     ?>
     <div class="container">
-        <?php
-        var_dump($conn);
-        ?>
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
@@ -89,11 +105,16 @@
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <?php
+                                           echo password_hash('123456', PASSWORD_DEFAULT)
+                                         ?>
                                     </div>
                                     <form class="user" method="POST" action="login.php">
                                         <div class="form-group">
 
-                                            <input name="username" type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter username...">
+                                            <input name="username" type="text" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="Enter username...">
                                         </div>
                                         <div class="red">
                                             <?php
@@ -103,12 +124,20 @@
                                             ?>
                                         </div>
                                         <div class="form-group">
-                                            <input name="password" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                                            <input name="password" type="password"
+                                                class="form-control form-control-user" id="exampleInputPassword"
+                                                placeholder="Password">
                                         </div>
                                         <div class="red">
                                             <?php
                                             if (isset($errors['password'])) {
                                                 echo  $errors['password'];
+                                            }
+                                            ?>
+
+                                            <?php
+                                            if (isset($errors['message'])) {
+                                                echo  $errors['message'];
                                             }
                                             ?>
                                         </div>
