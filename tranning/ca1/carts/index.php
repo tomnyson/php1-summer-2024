@@ -1,7 +1,7 @@
 <?php
 $products = array(
     array('id' => 1, 'name' => 'iphone15-xanh', 'img' => 'https://cdn.tgdd.vn/Products/Images/42/223602/iphone-13-xanh-glr-1.jpg', 'price' => 13590000),
-    array('id' => 1, 'name' => 'iphone15-hồng', 'img' => 'https://cdn.tgdd.vn/Products/Images/42/223602/iphone-13-1-3.jpg', 'price' => 13700000)
+    array('id' => 2, 'name' => 'iphone15-hồng', 'img' => 'https://cdn.tgdd.vn/Products/Images/42/223602/iphone-13-1-3.jpg', 'price' => 13700000)
 )
 
 ?>
@@ -28,10 +28,11 @@ $products = array(
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $product['name'] ?></h5>
                             <p class="card-text price"><?php echo $product['price'] ?></p>
-                            <form method="post" action="cart.php">
+                            <form method="post" action="cart-handle.php">
                                 <input type="hidden" name="id" value="<?php echo $product['id'] ?>">
                                 <input type="hidden" name="name" value="<?php echo $product['name'] ?>">
                                 <input type="hidden" name="price" value="<?php echo $product['price'] ?>">
+                                <input type="hidden" name="img" value="<?php echo $product['img'] ?>">
                                 <button type="submit" name="action" value="add" class="btn btn-primary">Buy</button>
                             </form>
 
@@ -39,6 +40,8 @@ $products = array(
                     </div>
                 </div>
             <?php } ?>
+
+
         </div>
     </div>
 </body>
