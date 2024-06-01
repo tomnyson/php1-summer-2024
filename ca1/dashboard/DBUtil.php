@@ -37,7 +37,6 @@ class DBUntil
         $fields = implode(", ", $keys);
         $placeholders = ":" . implode(", :", $keys);
         $sql = "INSERT INTO $table ($fields) VALUES ($placeholders)";
-        var_dump($sql);
         // insert into Category ( name , id ) Values ( ":name" , :id )
         $stmt = $this->connection->prepare($sql);
 
