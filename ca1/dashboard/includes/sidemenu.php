@@ -71,7 +71,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="product.php">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Sản phẩm</span></a>
     </li>

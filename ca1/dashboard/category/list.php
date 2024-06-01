@@ -1,8 +1,10 @@
 <?php
 include_once('./DBUtil.php');
+include_once('./Message.php');
 ini_set('display_errors', '1');
 
 $dbHelper = new DBUntil();
+
 $errors = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_POST["name"]) || empty($_POST['name'])) {
@@ -12,6 +14,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+<div class="col-md-12">
+    <?php
+    $message = new Message();
+    var_dump($message->displayMessage());
+    ?>
+
+</div>
 <form action="category.php" method="post">
     <input type="text" name="name" placeholder="Ten Danh Muc">
     <input type="submit" class="btn btn-success" value="Them moi">
@@ -45,3 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </tr>
 </table>
+<?php
+unset($_SESSION['message']);
+?>
