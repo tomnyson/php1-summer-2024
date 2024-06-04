@@ -65,13 +65,13 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="category.php">
+        <a class="nav-link" href="master.php?view=category_list">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Danh Mục</span></a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="product.php">
+        <a class="nav-link" href="master.php?view=product_list">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Sản phẩm</span></a>
     </li>

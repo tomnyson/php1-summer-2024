@@ -1,4 +1,6 @@
-<?php include_once('./includes/header.php') ?>
+<?php
+ob_start();
+include_once('./includes/header.php') ?>
 <?php
 session_start();
 ini_set('display_errors', 1);
@@ -12,7 +14,7 @@ error_reporting(E_ALL);
 
     <!-- End of Page Wrapper -->
     <div id="wrapper">
-        <?php include "./includes/sidemenu.php" ?>
+        <?php include_once "./includes/sidemenu.php" ?>
         <!-- Sidebar -->
         <!-- End of Sidebar -->
 
@@ -37,10 +39,22 @@ error_reporting(E_ALL);
                     <!-- Content Row -->
                     <div class="row">
                         <?php
+                        include_once('./DBUtil.php');
+                        include_once('./Message.php');
                         $view = isset($_GET['view']) ? $_GET['view'] : 'index';
+                        var_dump($view);
                         switch ($view) {
-                            case 'category':
+                            case 'category_list':
                                 include_once('./category/list.php');
+                                break;
+                            case 'category_delete':
+                                include_once('./category/delete.php');
+                                break;
+                            case 'category_update':
+                                include_once('./category/update.php');
+                                break;
+                            case 'product_list':
+                                include_once('./product/list.php');
                                 break;
                         }
 
@@ -50,4 +64,6 @@ error_reporting(E_ALL);
                 </div>
                 <!-- End of Main Content -->
 
-                <?php include_once('./includes/footer.php') ?>
+                <?php include_once('./includes/footer.php');
+                ob_end_flush();
+                ?>

@@ -44,8 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<tr>";
         echo "<td>$cat[id]</td>";
         echo "<td>$cat[name]</td>";
-        echo "<td> <a class='btn btn-danger' href='category/delete.php?id=$cat[id]'>remove</a>
-                    <a class='btn btn-info' href='category/update.php?id=$cat[id]'>update</a>
+        echo "<td> <a class='btn btn-danger' href='master.php?view=category_delete&id=$cat[id]'>remove</a>
+                    <a class='btn btn-info' href='master.php?view=category_update&id=$cat[id]'>update</a>
                 </td>";
         echo "</tr>";
     }

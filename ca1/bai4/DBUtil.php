@@ -68,7 +68,6 @@ class DBUntil
     public function delete($table, $condition)
     {
         $sql = "DELETE FROM $table WHERE $condition";
-        var_dump($sql);
         $stmt = $this->connection->prepare($sql);
         $stmt->execute();
         return $stmt->rowCount();
