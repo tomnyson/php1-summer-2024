@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <h2>Danh Mục</h2>
-<form action="index.php?view=category" method="post">
+<form action="index.php?view=category_create" method="post">
     <input type="text" name="name" placeholder="Ten Danh Muc">
     <input type="submit" class="btn btn-success" value="Them moi">
     <?php if (isset($errors['name'])) {
@@ -31,8 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <table class="table">
     <thead>
         <tr>
-            <th>id</th>
             <th>name</th>
+            <th>gia</th>
             <th>action</th>
         </tr>
     </thead>
@@ -42,8 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<tr>";
         echo "<td>$cat[id]</td>";
         echo "<td>$cat[name]</td>";
-        echo "<td> <a class='btn btn-danger' href='category/delete.php?id=$cat[id]'>remove</a>
-                 <a class='btn btn-info' href='category/update.php?id=$cat[id]'>update</a>
+        echo "<td> <a class='btn btn-danger' href='index.php?view=category_delete&id=$cat[id]'>remove</a>
+                 <a class='btn btn-info' href='index.php?view=category_update&id=$cat[id]'>update</a>
                 </td>";
         echo "</tr>";
     }

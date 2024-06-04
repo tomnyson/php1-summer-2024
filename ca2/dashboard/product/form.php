@@ -1,56 +1,55 @@
 <form action="create.php" method="post" enctype="multipart/form-data">
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">id</label>
-        <input class="form-control" type="text" name="id" placeholder="id">
+        <label for="exampleFormControlInput1" class="form-label">username</label>
+        <input class="form-control" type="text" name="username" placeholder="username">
         <?php
-        if (isset($errors['id'])) {
-            echo "<span class='error'>$errors[id]</span>";
+        if (isset($errors['username'])) {
+            echo "<span class='error'>$errors[username]</span>";
         }
         ?>
     </div>
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label"> name</label>
-        <input class="form-control" type="name" name="name" placeholder="name">
+        <label for="exampleFormControlInput1" class="form-label">password</label>
+        <input class="form-control" type="password" name="password" placeholder="password">
         <?php
-        if (isset($errors['name'])) {
-            echo "<span class='error'>$errors[name]</span>";
+        if (isset($errors['password'])) {
+            echo "<span class='error'>$errors[password]</span>";
         }
         ?>
     </div>
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label"> price</label>
-        <input class="form-control" type="price" price="price" placeholder="price">
+        <label for="exampleFormControlInput1" class="form-label">avatar</label>
+        <input class="form-control" type="file" name="avatar" placeholder="avatar">
         <?php
-        if (isset($errors['price'])) {
-            echo "<span class='error'>$errors[price]</span>";
+        if (isset($errors['avatar'])) {
+            echo "<span class='error'>$errors[avatar]</span>";
         }
         ?>
     </div>
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label"> quantity</label>
-        <input class="form-control" type="quantity" quantity="quantity" placeholder="quantity">
+        <label for="exampleFormControlInput1" class="form-label">email</label>
+        <input class="form-control" type="email" name="email" placeholder="email">
         <?php
-        if (isset($errors['quantity'])) {
-            echo "<span class='error'>$errors[quantity]</span>";
-        }
-        ?>
-    </div>
-
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">sale</label>
-        <input class="form-control" type="text" name="sale" placeholder="sale">
-        <?php
-        if (isset($errors['sale'])) {
-            echo "<span class='error'>$errors[sale]</span>";
+        if (isset($errors['email'])) {
+            echo "<span class='error'>$errors[email]</span>";
         }
         ?>
     </div>
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">description</label>
-        <input class="form-control" type="text" name="description" placeholder="description">
+        <label for="exampleFormControlInput1" class="form-label">address</label>
+        <input class="form-control" type="text" name="address" placeholder="address">
         <?php
-        if (isset($errors['description'])) {
-            echo "<span class='error'>$errors[description]</span>";
+        if (isset($errors['address'])) {
+            echo "<span class='error'>$errors[address]</span>";
+        }
+        ?>
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">phone</label>
+        <input class="form-control" type="text" name="phone" placeholder="phone">
+        <?php
+        if (isset($errors['phone'])) {
+            echo "<span class='error'>$errors[phone]</span>";
         }
         ?>
     </div>

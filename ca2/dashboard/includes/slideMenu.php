@@ -21,14 +21,14 @@
 
        <!-- Nav Item - Charts -->
        <li class="nav-item">
-           <a class="nav-link" href="category.php">
+           <a class="nav-link" href="index.php?view=category_list">
                <i class="fas fa-fw fa-chart-area"></i>
                <span>Danh Mục</span></a>
        </li>
 
        <!-- Nav Item - Charts -->
        <li class="nav-item">
-           <a class="nav-link" href="product.php">
+           <a class="nav-link" href="index.php?view=product_list">
                <i class="fas fa-fw fa-chart-area"></i>
                <span>Sản Phẩm</span></a>
        </li>
