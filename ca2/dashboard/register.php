@@ -30,6 +30,9 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
     include_once('./provider.php');
+    include_once('./DBUtil.php');
+
+    $dbHelper = new DBUntil();
     $errors = [];
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['username'])) {
@@ -65,25 +68,32 @@
             }
         }
         if (isset($conn) && count($errors) == 0) {
+
             // check ton tai username or email address
-            $queryCheck = "select * from users where username= :username";
-            $statement = $conn->prepare($queryCheck);
-            $statement->execute([
-                'username' => $_POST['username'],
-            ]);
-            $count = $statement->rowCount();
-            if ($count > 0) {
+            $checkUserName = $dbHelper->select(
+                "select * from users where username= :username or email= :email",
+                array(
+                    'username' => $_POST['username'],
+                    'email' => $_POST['email'],
+                )
+            );
+            if (!empty($checkUserName)) {
                 $errors['username'] = "username or email already exists";
             } else {
                 //xu ly dang ky tai khoan
                 $query = "insert into users (username, password, email) values(:username, :password, :email)";
-                $statement = $conn->prepare($query);
-                $isCreated = $statement->execute([
-                    'username' => $_POST['username'],
-                    'password' => $_POST['password'],
-                    'email' => $_POST['email'],
-                ]);
-                if ($isCreated) {
+                $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                $isCreate = $dbHelper->insert(
+                    "users",
+                    array(
+                        "username" => $_POST['username'],
+                        'password' => $hash,
+                        'email' => $_POST['email'],
+
+                    )
+                );
+
+                if ($isCreate) {
                     header("Location: login.php");
                 }
             }

@@ -7,7 +7,7 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
     session_start();
-    require_once("./provider.php");
+    require_once("./DBUtil.php");
     ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,14 +19,16 @@
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <style>
-        .red {
-            color: red;
-        }
+    .red {
+        color: red;
+    }
     </style>
 </head>
 
@@ -63,19 +65,17 @@
                 }
             }
         }
-        if (isset($conn) && count($errors) == 0) {
-            $querycheckuser = "SELECT * from users WHERE email = :email and username = :username";
-            $statementcheck = $conn->prepare($querycheckuser);
-            $statementcheck->execute([
-                "username" => $_POST['username'],
-                "email" => $_POST['email'],
-            ]);
-            if ($statementcheck->rowCount() > 0) {
+        if (count($errors) == 0) {
+            $dbHelper = new DBUntil();
+            $querycheckuser = "SELECT * from users WHERE email = :email or username = :username";
+            $checkUser = $dbHelper->select($querycheckuser, array(
+                'email' => $_POST['email'],
+                'username' => $_POST['username']
+            ));
+            if (count($checkUser) > 0) {
                 $errors["username"] = "Username da ton tai";
             } else {
-                $query = "insert into users (username, email, password, role, status) values(:username, :email, :password, :role, :status)";
-                $statement = $conn->prepare($query);
-                $isCreated = $statement->execute([
+                $isCreated =  $dbHelper->insert('users', [
                     "username" => $_POST['username'],
                     "password" =>  password_hash($_POST['password'], PASSWORD_DEFAULT),
                     "email" => $_POST['email'],
@@ -108,7 +108,8 @@
                             <form class="user" action="register.php" method="post">
                                 <div class=" form-group row">
                                     <div class="col-sm-12">
-                                        <input name="username" type="text" class="form-control form-control-user" id="exampleLastName" placeholder="enter your username">
+                                        <input name="username" type="text" class="form-control form-control-user"
+                                            id="exampleLastName" placeholder="enter your username">
                                         <?php
                                         if (isset($errors['username']) && $errors) {
                                             echo "<p class='red'>$errors[username]</p>";
@@ -118,7 +119,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address">
+                                    <input type="email" name="email" class="form-control form-control-user"
+                                        id="exampleInputEmail" placeholder="Email Address">
                                     <?php
                                     if (isset($errors['email'])) {
                                         echo "<p class='red'>$errors[email]</p>";
@@ -128,7 +130,8 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" />
+                                        <input type="password" name="password" class="form-control form-control-user"
+                                            id="exampleInputPassword" placeholder="Password" />
                                         <?php
                                         if (isset($errors['password'])) {
                                             echo "<p class='red'>$errors[password]</p>";
@@ -137,7 +140,9 @@
                                         ?>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="password" name="passwordconfirm" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
+                                        <input type="password" name="passwordconfirm"
+                                            class="form-control form-control-user" id="exampleRepeatPassword"
+                                            placeholder="Repeat Password">
                                         <?php
                                         if (isset($errors['passwordconfirm'])) {
                                             echo "<p class='red'>$errors[passwordconfirm]</p>";
@@ -146,7 +151,8 @@
                                         ?>
                                     </div>
                                 </div>
-                                <input type="submit" class="btn btn-primary btn-user btn-block" value=" Register Account" />
+                                <input type="submit" class="btn btn-primary btn-user btn-block"
+                                    value=" Register Account" />
 
                                 <hr>
                                 <a href="index.html" class="btn btn-google btn-user btn-block">

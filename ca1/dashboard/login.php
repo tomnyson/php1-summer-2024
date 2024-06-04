@@ -8,7 +8,8 @@ include_once('./includes/header.php');
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
     session_start();
-    require_once("./provider.php");
+    require_once("./DBUtil.php");
+    $dbHelper = new DBUntil();
     $errors = [];
     // $_SESSION['ds_users'] = [];
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -33,16 +34,15 @@ include_once('./includes/header.php');
                 }
             }
         }
-        if (isset($conn) && count($errors) == 0) {
+        if (count($errors) == 0) {
             try {
                 $query = "SELECT * FROM users where username = :username";
-                $statement = $conn->prepare($query);
-                $statement->execute([
+                $result = $dbHelper->select($query, [
                     "username" => $_POST['username'],
                 ]);
-                $statement->setFetchMode(PDO::FETCH_ASSOC);
-                if ($statement->rowCount() > 0) {
-                    $result = $statement->fetchAll();
+
+                if (count($result) > 0) {
+                    var_dump($result);
                     $storedHashPassword = $result[0]['password'];
                     if (password_verify($_POST['password'], $storedHashPassword)) {
                         $_SESSION["username"] = $_POST['username'];
@@ -119,7 +119,7 @@ include_once('./includes/header.php');
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
+                                        <a class="small" href="register.php">Create an Account!</a>
                                     </div>
                                 </div>
                             </div>
