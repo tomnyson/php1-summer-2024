@@ -1,4 +1,5 @@
 <?php
+
 include_once('./DBUtil.php');
 include_once('./cart.php');
 ini_set('display_errors', '1');
@@ -21,6 +22,14 @@ $carts = new Cart();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Option 1: Include in HTML -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <style>
+    .flex-center {
+        margin-top: 20px;
+        display: flex;
+        justify-content: end;
+    }
+    </style>
+
 </head>
 
 <body>
@@ -89,6 +98,13 @@ $carts = new Cart();
 
             </tr>
         </table>
+        <form>
+            <div class="flex-center">
+                <input type="code" class="form-control" style="width: 200px" placeholder="nhập mã khuyến mãi" />
+                <button type="submit" class="btn btn-primary" name="action" value="checkCode">Apply</button>
+            </div>
+
+        </form>
         <h2>Tổng đơn hàng: <?= $carts->getTotal() ?></h2>
     </div>
 
