@@ -68,17 +68,17 @@
         ?>
     </div>
     <div class="mb-3">
-        <label class="form-check-label mt-3">Trạng thái tài khoản:</label>
+        <label class="form-check-label mt-3">Trạng thái :</label>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="status" value="1" id="status1" checked>
             <label class="form-check-label" for="status1">
-                cho phép hoạt động
+                hoạt động
             </label>
         </div>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="status" value="0" id="status2">
             <label class="form-check-label" for="flexRadioDefault2">
-                khóa tài khoản
+                không hoạt động
             </label>
         </div>
     </div>
