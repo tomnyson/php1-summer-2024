@@ -4,17 +4,37 @@ ini_set('display_errors', '1');
 
 $dbHelper = new DBUntil();
 
-$categories = $dbHelper->select("select * from categories");
 $errors = [];
+function checkCode($code)
+{
+    global $dbHelper;
+    $sql = $dbHelper->select("SELECT * FROM coupons  WHERE code = '$code'");
+    if (count($sql) > 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_POST["name"]) || empty($_POST['name'])) {
         $errors['name'] = "error";
     } else {
         /**
-         *  call insert db utils
-         */
-        $isCreate = $dbHelper->insert('categories', array('name' => $_POST['name']));
-        var_dump($isCreate);
+         *  call insert db */
+        if (!empty($_POST['code'])) {
+            if (!checkCode($_POST['code'])) {
+                $errors['codeE'] = ' Invalid code';
+            } else {
+                $codeValid = $dbHelper->insert('coupons', array(
+                    'name' => $_POST['name'],
+                    'code' => $_POST['code'],
+                    'quantity' => $_POST['quantity'],
+                    'discount' => $_POST['discount'],
+                    'startDate' => $_POST['startDate'],
+                    'endDate' => $_POST['endDate']
+                ));
+            }
+        }
     }
 }
 ?>
@@ -34,12 +54,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container mt-3">
         <h2>Danh sách mã khuyến mãi</h2>
         <form action="index.php" method="post">
-            <input type="text" name="name" class="form-control mt-3" placeholder="tên mã khuyến mãi">
-            <input type="text" name="code" class="form-control mt-3" placeholder="mã khuyến mãi">
-            <input type="number" name="quantity" class="form-control mt-3" placeholder="số lượng mã giảm giá">
-            <input type="number" name="discount" class="form-control mt-3" placeholder="phần trăm giảm giá">
-            <input type="date" name="startDate" class="form-control mt-3" placeholder="ngày bắt đầu">
-            <input type="date" name="endDate" class="form-control mt-3" placeholder="ngày kết thúc">
+            <input type="text" name="name" class="form-control mt-3" required placeholder="tên mã khuyến mãi">
+            <input type="text" name="code" class="form-control mt-3" required placeholder="mã khuyến mãi">
+            <input type="number" name="quantity" class="form-control mt-3" required placeholder="số lượng mã giảm giá">
+            <input type="number" name="discount" class="form-control mt-3" required placeholder="phần trăm giảm giá">
+            <input type="date" name="startDate" class="form-control mt-3" required placeholder="ngày bắt đầu">
+            <input type="date" name="endDate" class="form-control mt-3" required placeholder="ngày kết thúc">
             <input type="submit" class="btn btn-success mt-3" value="Them moi">
             <?php if (isset($errors['name'])) {
                 echo "<br/>";
@@ -52,17 +72,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <tr>
                     <th>id</th>
                     <th>name</th>
+                    <th>code</th>
+                    <th>quantity</th>
+                    <th>discount</th>
+                    <th>start date</th>
+                    <th>end date</th>
                     <th>action</th>
                 </tr>
             </thead>
 
             <?php
-            foreach ($categories as $cat) {
+
+            $counpons = $dbHelper->select("select * from coupons");
+            foreach ($counpons as $item) {
                 echo "<tr>";
-                echo "<td>$cat[id]</td>";
-                echo "<td>$cat[name]</td>";
-                echo "<td> <a class='btn btn-danger' href='delete.php?id=$cat[id]'>remove</a>
-                    <a class='btn btn-info' href='update.php?id=$cat[id]'>update</a>
+                echo "<td>$item[id]</td>";
+                echo "<td>$item[name]</td>";
+                echo "<td>$item[code]</td>";
+                echo "<td>$item[quantity]</td>";
+                echo "<td>$item[discount]</td>";
+                echo "<td>$item[startDate]</td>";
+                echo "<td>$item[endDate]</td>";
+                echo "<td> <a class='btn btn-danger' href='delete.php?id=$item[id]'>remove</a>
+                    <a class='btn btn-info' href='update.php?id=$item[id]'>update</a>
                 </td>";
                 echo "</tr>";
             }
