@@ -2,7 +2,7 @@
 ini_set('display_errors', '1');
 include "Database.php";
 define("HOST", "localhost");
-define("DB_NAME", "php1-spring-2024");
+define("DB_NAME", "php1-ca2-spring-2024");
 define("USERNAME", "root");
 define("PASSWORD", "");
 

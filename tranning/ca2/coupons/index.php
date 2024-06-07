@@ -4,7 +4,7 @@ ini_set('display_errors', '1');
 
 $dbHelper = new DBUntil();
 
-$categories = $dbHelper->select("select * from categories");
+
 $errors = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_POST["name"]) || empty($_POST['name'])) {
@@ -12,6 +12,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     if (!isset($_POST["code"]) || empty($_POST['code'])) {
         $errors['code'] = "code is required";
+    } else {
+        $code = $dbHelper->select("select * from coupons where code=:code", array('code' => $_POST['code']));
+        if (count($errors) > 0) {
+            $errors['code'] = "code is exists";
+        }
     }
     if (!isset($_POST["quantity"]) || empty($_POST['quantity'])) {
         $errors['quantity'] = "quantity is required";
@@ -24,11 +29,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     if (!isset($_POST["endDate"]) || empty($_POST['endDate'])) {
         $errors['endDate'] = "endDate is required";
-    } else {
+    }
+
+    if (count($errors) == 0) {
         /**
          *  call insert db utils
          */
-        $isCreate = $dbHelper->insert('categories', array('name' => $_POST['name']));
+        /**
+         * check code duy nhat
+         * Unique ID 
+         */
+        $isCreate = $dbHelper->insert('coupons', array(
+            'name' => $_POST['name'],
+            'code' => $_POST['code'],
+            'quantity' => $_POST['quantity'],
+            'discount' => $_POST['discount'],
+            'startDate' => $_POST['startDate'],
+            'endDate' => $_POST['endDate']
+        ));
         // var_dump($isCreate);
     }
 }
@@ -87,27 +105,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } ?>
             <input type="submit" class="btn btn-success mt-3" value="them moi">
 
-            <?php if (isset($errors['name'])) {
-                echo "<br/>";
-                echo "<span class='txt-danger'>$errors[name]</span>";
-            } ?>
         </form>
         <table class="table">
             <thead>
                 <tr>
                     <th>id</th>
                     <th>name</th>
+                    <th>code</th>
+                    <th>quantity</th>
+                    <th>discount</th>
+                    <th>startDate</th>
+                    <th>endDate</th>
                     <th>action</th>
                 </tr>
             </thead>
 
             <?php
-            foreach ($categories as $cat) {
+            $counpons = $dbHelper->select("select * from coupons");
+            foreach ($counpons as $item) {
                 echo "<tr>";
-                echo "<td>$cat[id]</td>";
-                echo "<td>$cat[name]</td>";
-                echo "<td> <a class='btn btn-danger' href='delete.php?id=$cat[id]'>remove</a>
-                    <a class='btn btn-info' href='update.php?id=$cat[id]'>update</a>
+                echo "<td>$item[id]</td>";
+                echo "<td>$item[name]</td>";
+                echo "<td>$item[code]</td>";
+                echo "<td>$item[quantity]</td>";
+                echo "<td>$item[discount]</td>";
+                echo "<td>$item[startDate]</td>";
+                echo "<td>$item[endDate]</td>";
+                echo "<td> <a class='btn btn-danger' href='delete.php?id=$item[id]'>remove</a>
+                    <a class='btn btn-info' href='update.php?id=$item[id]'>update</a>
                 </td>";
                 echo "</tr>";
             }
