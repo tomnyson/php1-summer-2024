@@ -13,8 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_POST["code"]) || empty($_POST['code'])) {
         $errors['code'] = "code is required";
     } else {
-        $code = $dbHelper->select("select * from coupons where code=:code", array('code' => $_POST['code']));
-        if (count($errors) > 0) {
+        $code = $dbHelper->select("select * from coupons where code= :code", array('code' => $_POST['code']));
+        if (count($code) > 0) {
             $errors['code'] = "code is exists";
         }
     }
@@ -62,10 +62,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <style>
-.txt-danger {
-    color: red;
-    font-weight: bold;
-}
+    .txt-danger {
+        color: red;
+        font-weight: bold;
+    }
 </style>
 
 <body>

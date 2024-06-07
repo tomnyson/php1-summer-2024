@@ -6,5 +6,5 @@ var_dump($id);
 
 $dbHelper = new DBUntil();
 
-$categories = $dbHelper->delete("categories", "id = $id");
+$categories = $dbHelper->delete("coupons", "id = $id");
 header("Location: index.php");

@@ -9,7 +9,24 @@ $dbHelper = new DBUntil();
 $categories = $dbHelper->select("select * from products");
 $errors = [];
 $carts = new Cart();
-
+$discount = 0;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'checkCode') {
+    var_dump($_POST);
+    if (isset($_POST['code']) && !empty($_POST['code'])) {
+        $code = $dbHelper->select(
+            "SELECT * FROM coupons WHERE code = :code AND quantity > 0 AND 
+        startDate <= :currentDate AND endDate >= :currentDate",
+            array(
+                'code' => $_POST['code'],
+                'currentDate' => date("Y-m-d")
+            )
+        );
+        var_dump($code);
+        if (count($code) == 0) {
+            $errors['code'] = "code is exists";
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,10 +115,16 @@ $carts = new Cart();
 
             </tr>
         </table>
-        <form>
+        <form method="post" action="">
             <div class="flex-center">
-                <input type="code" class="form-control" style="width: 200px" placeholder="nhập mã khuyến mãi" />
+                <input type="text" name="code" class="form-control" style="width: 200px"
+                    placeholder="nhập mã khuyến mãi" />
                 <button type="submit" class="btn btn-primary" name="action" value="checkCode">Apply</button>
+                <?php if (isset($errors['code'])) {
+                echo "<br/>";
+                echo "<span class='txt-danger'>$errors[code]</span>";
+            } ?>
+
             </div>
 
         </form>
