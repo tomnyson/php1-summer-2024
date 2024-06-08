@@ -16,5 +16,7 @@ spl_autoload_register(function ($class) {
 
     if (file_exists($file)) {
         require $file;
+    } else {
+        echo "Class file for {$class} not found: {$file}";
     }
 });

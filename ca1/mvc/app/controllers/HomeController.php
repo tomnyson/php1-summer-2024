@@ -30,8 +30,10 @@ class HomeController extends Controller
 
     public function edit($id)
     {
+        var_dump($id);
         $productModel = $this->model('Product');
-
+        echo "call this route to edit 13131";
+        var_dump($productModel);
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'];
             $price = $_POST['price'];

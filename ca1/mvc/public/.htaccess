@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /php1-summer-2024/ca1/mvc/public/
+RewriteBase /php1-summer-2024/ca1/mvc
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Controllers;
+
 use Core\Controller;
 
 class ProductController extends Controller
@@ -20,7 +22,7 @@ class ProductController extends Controller
             $productModel = $this->model('Product');
             $productModel->create($name, $price);
 
-            header('Location: /product/index');
+            header('Location: /php1-summer-2024/ca1/mvc/public/product/index');
         } else {
             $this->view('product/create');
         }
@@ -36,7 +38,7 @@ class ProductController extends Controller
 
             $productModel->update($id, $name, $price);
 
-            header('Location: /product/index');
+            header('Location: /php1-summer-2024/ca1/mvc/public/product/index');
         } else {
             $product = $productModel->getById($id);
             $this->view('product/edit', ['product' => $product]);
@@ -48,6 +50,6 @@ class ProductController extends Controller
         $productModel = $this->model('Product');
         $productModel->delete($id);
 
-        header('Location: /product/index');
+        header('Location: /php1-summer-2024/ca1/mvc/public/product/index');
     }
 }

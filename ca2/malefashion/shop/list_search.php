@@ -1,4 +1,7 @@
 <?php
+if (isset($_GET['keyword'])) {
+    var_dump($_GET);
+}
 $dbHelper = new DBUntil();
 
 $products = $dbHelper->select("select * from products");
@@ -28,8 +31,8 @@ $products = $dbHelper->select("select * from products");
             <div class="col-lg-3">
                 <div class="shop__sidebar">
                     <div class="shop__sidebar__search">
-                        <form method="get" action="index.php?view=shop_search">
-                            <input type="text" placeholder="Search.. 111.">
+                        <form action="search.php">
+                            <input type="text" name="keyword" placeholder="Search...">
                             <button type="submit"><span class="icon_search"></span></button>
                         </form>
                     </div>

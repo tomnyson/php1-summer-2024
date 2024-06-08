@@ -8,7 +8,7 @@
 
 <body>
     <h1>Products</h1>
-    <a href="/product/create">Create New Product</a>
+    <a href="/product/create">Create New Product 1111</a>
     <table border="1">
         <tr>
             <th>ID</th>
