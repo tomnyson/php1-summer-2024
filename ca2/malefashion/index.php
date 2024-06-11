@@ -30,6 +30,12 @@ if (isset($_GET['view'])) {
         case 'shop_update':
             include_once('./shop/update.php');
             break;
+        case 'cart':
+            include_once('./shopping-cart.php');
+            break;
+        case 'checkout':
+            include_once('./checkout.php');
+            break;
     }
 }
 
