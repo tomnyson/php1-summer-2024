@@ -145,7 +145,14 @@ var_dump($_GET)
                                     <input type="text" value="1">
                                 </div>
                             </div>
-                            <a href="#" class="primary-btn">add to cart</a>
+                            <form action="cart-handle.php" method="post">
+                                <input type="hidden" name="id" value="<?php echo  $detail['id']; ?>" />
+                                <input type="hidden" name="name" value="<?php echo  $detail['name']; ?>" />
+                                <input type="hidden" name="price" value="<?php echo  $detail['price']; ?>" />
+                                <input type="hidden" name="img" value="<?php echo  $detail['img']; ?>" />
+                                <input type="submit" value="add" name="action" class="primary-btn" />
+                            </form>
+
                         </div>
                         <div class="product__details__btns__option">
                             <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>

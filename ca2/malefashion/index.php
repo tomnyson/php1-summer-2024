@@ -13,7 +13,7 @@ if (isset($_SESSION['message'])) {
 }
 var_dump($_GET);
 if (isset($_GET['view'])) {
-    $view = $_GET['view'];
+    $view = $_GET['view'] ?  $_GET['view'] : 'shop';
     switch ($view) {
         case 'category_list':
             include_once('./shop/index.php');

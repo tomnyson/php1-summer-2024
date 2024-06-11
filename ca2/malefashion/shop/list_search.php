@@ -1,10 +1,15 @@
 <?php
-if (isset($_GET['keyword'])) {
-    var_dump($_GET);
-}
 $dbHelper = new DBUntil();
 
 $products = $dbHelper->select("select * from products");
+
+if (isset($_GET['keyword'])) {
+    var_dump($_GET);
+    $products = $dbHelper->select(
+        "select * from products where name like '%$_GET[keyword]%'",
+    );
+    var_dump($products);
+}
 ?>
 <!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-option">
@@ -213,8 +218,7 @@ $products = $dbHelper->select("select * from products");
                 </div>
                 <div class="row">
                     <?php
-                    $product = $dbHelper->select("select * from products");
-                    foreach ($product as $item) { ?>
+                    foreach ($products as $item) { ?>
 
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
