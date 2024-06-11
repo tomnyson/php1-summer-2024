@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 
 
 class Cart
@@ -33,12 +31,18 @@ class Cart
         $_SESSION['carts'] = $this->items;
     }
 
+    function clearCart()
+    {
+        $this->items = array();
+        $_SESSION['carts'] = [];
+    }
+
     function remove($productId)
     {
-        if (isset($this->items[$productId])) {
+        if (!empty($productId) && isset($this->items[$productId])) {
             unset($this->items[$productId]);
+            $this->setCart();
         }
-        $this->setCart();
     }
     function getCart()
     {

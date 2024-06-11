@@ -1,5 +1,4 @@
-<?php
-$dbHelper = new DBUntil();
+<?php $dbHelper = new DBUntil();
 $detail = null;
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -7,8 +6,8 @@ if (isset($_GET['id'])) {
     if (count($products) > 0) {
         $detail = $products[0];
     }
-    //     die;
-    //     var_dump($products);
+    // die;
+    // var_dump($products);
 }
 ?>
 <section class="shop-details">
@@ -73,7 +72,8 @@ if (isset($_GET['id'])) {
                         <div class="tab-pane" id="tabs-4" role="tabpanel">
                             <div class="product__details__pic__item">
                                 <img src="img/shop-details/product-big-4.png" alt="">
-                                <a href="https://www.youtube.com/watch?v=8PJ3_p7VqHw&list=RD8PJ3_p7VqHw&start_radio=1" class="video-popup"><i class="fa fa-play"></i></a>
+                                <a href="https://www.youtube.com/watch?v=8PJ3_p7VqHw&list=RD8PJ3_p7VqHw&start_radio=1"
+                                    class="video-popup"><i class="fa fa-play"></i></a>
                             </div>
                         </div>
                     </div>
@@ -138,7 +138,12 @@ if (isset($_GET['id'])) {
                                     <input type="text" value="1">
                                 </div>
                             </div>
-                            <a href="#" class="primary-btn">add to cart</a>
+                            <form method="get" action="./cart-handle.php">
+                                <input type="hidden" name="id" value="<?php echo $detail['id']; ?>" />
+
+                                <button type="submit" class="primary-btn" name="action" value="add" class="add-cart">+
+                                    Add To Cart</button>
+                            </form>
                         </div>
                         <div class="product__details__btns__option">
                             <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>
@@ -312,7 +317,13 @@ if (isset($_GET['id'])) {
                     </div>
                     <div class="product__item__text">
                         <h6>Diagonal Textured Cap</h6>
-                        <a href="#" class="add-cart">+ Add To Cart</a>
+                        <form method="post" action="./cart-handle.php">
+                            <input type="hidden" name="id" value="<?php echo $detail['id']; ?>" />
+                            <input type="hidden" name="name" value="<?php echo $detail['name']; ?>" />
+                            <input type="hidden" name="price" value="<?php echo $detail['price']; ?>" />
+                            <input type="hidden" name="img" value="<?php echo $detail['img']; ?>" />
+                            <button type="submit" name="action" value="add" class="add-cart">+ Add To Cart</button>
+                        </form>
                         <div class="rating">
                             <i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i>

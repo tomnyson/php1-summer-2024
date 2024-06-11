@@ -1,9 +1,7 @@
 <?php
-include_once('./includes/header.php');
-include_once('./includes/menu.php')
-?>
-<?php
 session_start();
+include_once('./includes/header.php');
+include_once('./includes/menu.php');
 ini_set('display_errors', '1');
 include_once('./DBUtil.php');
 if (isset($_SESSION['message'])) {
@@ -35,6 +33,9 @@ if (isset($_GET['view'])) {
             break;
         case 'checkout':
             include_once('./checkout.php');
+            break;
+        case 'thankyou':
+            include_once('./thankyou.php');
             break;
     }
 }

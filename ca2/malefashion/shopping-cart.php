@@ -1,4 +1,10 @@
 <!-- Breadcrumb Section Begin -->
+
+<?php
+
+include_once('./cart.php');
+$carts = new Cart();
+?>
 <section class="breadcrumb-option">
     <div class="container">
         <div class="row">
@@ -33,86 +39,35 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php foreach ($carts->getCart() as $item) { ?>
                             <tr>
                                 <td class="product__cart__item">
                                     <div class="product__cart__item__pic">
                                         <img src="img/shopping-cart/cart-1.jpg" alt="">
                                     </div>
                                     <div class="product__cart__item__text">
-                                        <h6>T-shirt Contrast Pocket</h6>
-                                        <h5>$98.49</h5>
+                                        <h6><?php echo $item['name'] ?></h6>
+                                        <h5><?php echo $item['price'] ?></h5>
                                     </div>
                                 </td>
                                 <td class="quantity__item">
                                     <div class="quantity">
                                         <div class="pro-qty-2">
-                                            <input type="text" value="1">
+                                            <input type="text" value="<?php echo $item['quantity'] ?>">
                                         </div>
                                     </div>
                                 </td>
                                 <td class="cart__price">$ 30.00</td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                                <td class="cart__close">
+                                    <form action="cart-handle.php" method="get">
+                                        <input type="hidden" name="id" value="<?php echo  $item['id']; ?>" />
+                                        <button type="submit" value="remove" name="action"> <i
+                                                class="fa fa-close"></i></button>
+                                    </form>
+                                    </i>
+                                </td>
                             </tr>
-                            <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="img/shopping-cart/cart-2.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>Diagonal Textured Cap</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty-2">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 32.50</td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                            </tr>
-                            <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="img/shopping-cart/cart-3.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>Basic Flowing Scarf</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty-2">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 47.00</td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                            </tr>
-                            <tr>
-                                <td class="product__cart__item">
-                                    <div class="product__cart__item__pic">
-                                        <img src="img/shopping-cart/cart-4.jpg" alt="">
-                                    </div>
-                                    <div class="product__cart__item__text">
-                                        <h6>Basic Flowing Scarf</h6>
-                                        <h5>$98.49</h5>
-                                    </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
-                                        <div class="pro-qty-2">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="cart__price">$ 30.00</td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
-                            </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>

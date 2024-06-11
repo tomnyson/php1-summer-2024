@@ -1,4 +1,8 @@
     <!-- Breadcrumb Section Begin -->
+    <?php
+    include_once('./cart.php');
+    $carts = new Cart();
+    ?>
     <section class="breadcrumb-option">
         <div class="container">
             <div class="row">
@@ -21,7 +25,7 @@
     <section class="checkout spad">
         <div class="container">
             <div class="checkout__form">
-                <form action="#">
+                <form action="cart-handle.php" method="post">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <h6 class="coupon__code"><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click
@@ -37,13 +41,13 @@
                             </div>
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
-                                <input type="text" placeholder="Street Address" class="checkout__input__add">
+                                <input type="text" name="address" placeholder="Street Address" class="checkout__input__add">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Phone<span>*</span></p>
-                                        <input type="text">
+                                        <input name="phone" type="text">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -75,7 +79,7 @@
                             </div>
                             <div class="checkout__input">
                                 <p>Order notes<span>*</span></p>
-                                <input type="text" placeholder="Notes about your order, e.g. special notes for delivery.">
+                                <input name="note" type="text" placeholder="Notes about your order, e.g. special notes for delivery.">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -83,14 +87,14 @@
                                 <h4 class="order__title">Your order</h4>
                                 <div class="checkout__order__products">Product <span>Total</span></div>
                                 <ul class="checkout__total__products">
-                                    <li>01. Vanilla salted caramel <span>$ 300.0</span></li>
-                                    <li>02. German chocolate <span>$ 170.0</span></li>
-                                    <li>03. Sweet autumn <span>$ 170.0</span></li>
-                                    <li>04. Cluten free mini dozen <span>$ 110.0</span></li>
+                                    <?php foreach ($carts->getCart() as $item) { ?>
+                                        <li> <?php echo $item['name'] ?> <span>
+                                                <?php echo $item['price'] * $item['quantity'] ?></span></li>
+                                    <?php } ?>
+
                                 </ul>
                                 <ul class="checkout__total__all">
-                                    <li>Subtotal <span>$750.99</span></li>
-                                    <li>Total <span>$750.99</span></li>
+                                    <li>Total <span><?php echo  $carts->getTotal(); ?> </span></li>
                                 </ul>
                                 <div class="checkout__input__checkbox">
                                     <label for="acc-or">
@@ -115,7 +119,8 @@
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
-                                <button type="submit" class="site-btn">PLACE ORDER</button>
+                                <button type="submit" name="action" value="save_order" class="site-btn">PLACE
+                                    ORDER</button>
                             </div>
                         </div>
                     </div>
