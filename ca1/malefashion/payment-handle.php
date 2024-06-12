@@ -1,30 +1,47 @@
 <?php
 define("VNPAY_TMN_CODE", "ZSZIOE9N");
 define("VNPAY_HASH_SECRET", "JOFUVFLCWAIJCIHEBVPVWOGVESWVVVBW");
-define("VNPAY_URL", "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html");
-define("VNPAY_RETURN_URL", "http://localhost/php1-summer-2024/ca1/malefashion/index.php?view=shop_list");
+define("VNPAY_URL", "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html");
+define("VNPAY_RETURN_URL", "http://localhost?view=shop_list");
 
+function convertToDateTime($dateString)
+{
+    // Tạo đối tượng DateTime với định dạng yyyyMMddHHmmss và đặt múi giờ GMT+7
+    $dateTime = DateTime::createFromFormat('YmdHis', $dateString, new DateTimeZone('Asia/Bangkok')); // GMT+7
+
+    if ($dateTime === false) {
+        return "Invalid date format.";
+    } else {
+        return $dateTime;
+    }
+}
 class PaymentService
 {
-    static public function createUrlPayment($orderId, $total)
+
+
+
+    static public function createUrlPayment($orderId = "130130", $total = 3103103)
     {
-        $vnp_TmnCode = VNPAY_TMN_CODE;
-        $vnp_HashSecret = VNPAY_HASH_SECRET;
-        $vnp_Url = VNPAY_URL;
-        $vnp_Returnurl = VNPAY_RETURN_URL;
+        var_dump(array($orderId, $total));
+        $vnp_TmnCode = VNPAY_TMN_CODE; // Mã website tại VNPAY
+        $vnp_HashSecret = VNPAY_HASH_SECRET; // Chuỗi bí mật
+        $vnp_Url = VNPAY_URL; // URL API của VNPAY
+        $vnp_Returnurl = VNPAY_RETURN_URL; // URL callback sau khi thanh toán
 
         $vnp_TxnRef = $orderId; // Mã đơn hàng
         $vnp_OrderInfo = 'Thanh toan don hang test';
         $vnp_OrderType = 'billpayment';
-        $vnp_Amount = $total * 100; // Số tiền thanh toán
+        $vnp_Amount = $total * 100; // Số tiền thanh toán, đơn vị là VND
         $vnp_Locale = 'vn';
-        $vnp_IpAddr =  $_SERVER['REMOTE_ADDR'];
+        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+        $date = new DateTime("now", new DateTimeZone('Asia/Bangkok'));
+        $vnp_CreateDate = $date->format('YmdHis');
         $inputData = array(
             "vnp_Version" => "2.1.0",
             "vnp_TmnCode" => $vnp_TmnCode,
             "vnp_Amount" => $vnp_Amount,
             "vnp_Command" => "pay",
-            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CreateDate" => $vnp_CreateDate,
             "vnp_CurrCode" => "VND",
             "vnp_IpAddr" => $vnp_IpAddr,
             "vnp_Locale" => $vnp_Locale,
@@ -54,9 +71,11 @@ class PaymentService
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
 
+        // For debugging purposes, remove in production
         echo $vnp_Url;
-        die;
         // die;
+
         header('Location: ' . $vnp_Url);
+        exit();
     }
 }
