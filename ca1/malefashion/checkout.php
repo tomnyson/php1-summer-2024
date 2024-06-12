@@ -77,7 +77,8 @@
                             </div>
                             <div class="checkout__input">
                                 <p>Order notes<span>*</span></p>
-                                <input type="text" placeholder="Notes about your order, e.g. special notes for delivery.">
+                                <input type="text"
+                                    placeholder="Notes about your order, e.g. special notes for delivery.">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -86,7 +87,7 @@
                                 <div class="checkout__order__products">Product <span>Total</span></div>
                                 <ul class="checkout__total__products">
                                     <?php foreach ($carts->getCart() as $item) { ?>
-                                        <li> <?php echo $item['name'] ?> <span><?php echo $item['price'] ?></span></li>
+                                    <li> <?php echo $item['name'] ?> <span><?php echo $item['price'] ?></span></li>
                                     <?php } ?>
 
                                 </ul>
@@ -100,20 +101,17 @@
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor
-                                    incididunt
-                                    ut labore et dolore magna aliqua.</p>
                                 <div class="checkout__input__checkbox">
                                     <label for="payment">
-                                        Check Payment
-                                        <input type="checkbox" id="payment">
+                                        COD
+                                        <input name="payment" value="cod" type="radio" id="payment">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
                                 <div class="checkout__input__checkbox">
                                     <label for="paypal">
-                                        Paypal
-                                        <input type="checkbox" id="paypal">
+                                        VNPAY
+                                        <input name="payment" value="vnpay" type="radio" id="paypal">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>

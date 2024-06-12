@@ -41,7 +41,14 @@
                 <div class="col-lg-6 col-md-5">
                     <div class="header__top__right">
                         <div class="header__top__links">
-                            <a href="#">Sign in</a>
+                            <?php
+                            if (!isset($_SESSION['username'])) {
+                                echo ' <a href="index.php?view=login">Sign in</a>';
+                            } else {
+                                echo ' <a href="auth/logout.php?view=logout">logout</a>';
+                            }
+
+                            ?>
                             <a href="#">FAQs</a>
                         </div>
                         <div class="header__top__hover">
@@ -67,7 +74,7 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="active"><a href="./index.html">Home</a></li>
+                        <li class="active"><a href="index.php?view=shop_list">Home</a></li>
                         <li><a href="index.php?view=shop_list">Shop</a></li>
                         <li><a href="#">Pages</a>
                             <ul class="dropdown">

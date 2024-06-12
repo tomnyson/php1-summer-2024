@@ -1,6 +1,5 @@
 <?php
 include_once('./DBUtil.php');
-include_once('./Message.php');
 ini_set('display_errors', '1');
 
 $dbHelper = new DBUntil();

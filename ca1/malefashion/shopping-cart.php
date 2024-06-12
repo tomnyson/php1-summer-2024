@@ -41,33 +41,34 @@
                             </thead>
                             <tbody>
                                 <?php foreach ($carts->getCart() as $item) { ?>
-                                    <tr>
-                                        <td class="product__cart__item">
-                                            <div class="product__cart__item__pic">
-                                                <img src="img/shopping-cart/cart-1.jpg" alt="">
+                                <tr>
+                                    <td class="product__cart__item">
+                                        <div class="product__cart__item__pic">
+                                            <img src="img/shopping-cart/cart-1.jpg" alt="">
+                                        </div>
+                                        <div class="product__cart__item__text">
+                                            <h6><?php echo $item['name'] ?></h6>
+                                            <h5><?php echo $item['price'] ?></h5>
+                                        </div>
+                                    </td>
+                                    <td class="quantity__item">
+                                        <div class="quantity">
+                                            <div class="pro-qty-2">
+                                                <input type="text" value="<?php echo $item['quantity'] ?>">
                                             </div>
-                                            <div class="product__cart__item__text">
-                                                <h6><?php echo $item['name'] ?></h6>
-                                                <h5><?php echo $item['price'] ?></h5>
-                                            </div>
-                                        </td>
-                                        <td class="quantity__item">
-                                            <div class="quantity">
-                                                <div class="pro-qty-2">
-                                                    <input type="text" value="<?php echo $item['quantity'] ?>">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="cart__price">$ 30.00</td>
-                                        <td class="cart__close">
-                                            <form action="cart-handle.php" method="post">
+                                        </div>
+                                    </td>
+                                    <td class="cart__price">$ 30.00</td>
+                                    <td class="cart__close">
+                                        <form action="cart-handle.php" method="post">
 
-                                                <input type="hidden" name="id" value="<?php echo  $item['id']; ?>" />
-                                                <button type="submit" value="remove" name="action"> <i class="fa fa-close"></i></button>
-                                            </form>
-                                            </i>
-                                        </td>
-                                    </tr>
+                                            <input type="hidden" name="id" value="<?php echo  $item['id']; ?>" />
+                                            <button type="submit" value="remove" name="action"> <i
+                                                    class="fa fa-close"></i></button>
+                                        </form>
+                                        </i>
+                                    </td>
+                                </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
@@ -99,7 +100,17 @@
                             <li>Subtotal <span>$ 169.50</span></li>
                             <li>Total <span>$ 169.50</span></li>
                         </ul>
-                        <a href="index.php?view=checkout" class="primary-btn">Proceed to checkout</a>
+
+                        <a href="<?php
+                                    // var_dump($_SESSION);
+                                    $url = 'index.php?view=checkout';
+                                    if (!isset($_SESSION['username'])) {
+                                        $url = 'index.php?view=login';
+                                    }
+                                    echo $url;
+                                    ?>" class="primary-btn">Process Checkout</a>
+
+
                     </div>
                 </div>
             </div>

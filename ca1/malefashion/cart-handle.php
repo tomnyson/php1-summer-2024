@@ -55,6 +55,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             ));
         }
+
+
+        if (isset($_POST['payment']) && $_POST['payment'] == 'vnpay') {
+
+            include_once("./payment-handle.php");
+            return PaymentService::createUrlPayment($isCreatedOrder, $carts->getTotal());
+            /**
+             *  b1: tạo thanh toán url
+             */
+        }
+
         // lấy id tự sinh của order
         // lặp cart hiện tại và lưu vào bảng order detail
     }

@@ -1,5 +1,6 @@
 <?php
 session_start();
+ob_start();
 include_once('./includes/header.php');
 include_once('./includes/menu.php')
 ?>
@@ -21,8 +22,13 @@ include_once('./includes/menu.php')
         case "checkout":
             include_once('./checkout.php');
             break;
+        case "login":
+            include_once('./auth/login.php');
+            break;
     }
     ?>
 
 </div>
-<?php include_once('./includes/footer.php') ?>
+<?php include_once('./includes/footer.php');
+ob_flush();
+?>
