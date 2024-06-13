@@ -35,13 +35,14 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Name<span>*</span></p>
-                                        <input type="text">
+                                        <input name="name" type="text">
                                     </div>
                                 </div>
                             </div>
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
-                                <input type="text" name="address" placeholder="Street Address" class="checkout__input__add">
+                                <input type="text" name="address" placeholder="Street Address"
+                                    class="checkout__input__add">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
@@ -79,7 +80,8 @@
                             </div>
                             <div class="checkout__input">
                                 <p>Order notes<span>*</span></p>
-                                <input name="note" type="text" placeholder="Notes about your order, e.g. special notes for delivery.">
+                                <input name="note" type="text"
+                                    placeholder="Notes about your order, e.g. special notes for delivery.">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -88,8 +90,8 @@
                                 <div class="checkout__order__products">Product <span>Total</span></div>
                                 <ul class="checkout__total__products">
                                     <?php foreach ($carts->getCart() as $item) { ?>
-                                        <li> <?php echo $item['name'] ?> <span>
-                                                <?php echo $item['price'] * $item['quantity'] ?></span></li>
+                                    <li> <?php echo $item['name'] ?> <span>
+                                            <?php echo $item['price'] * $item['quantity'] ?></span></li>
                                     <?php } ?>
 
                                 </ul>
@@ -184,9 +186,10 @@
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         <p>Copyright ©
                             <script>
-                                document.write(new Date().getFullYear());
+                            document.write(new Date().getFullYear());
                             </script>2020
-                            All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            All rights reserved | This template is made with <i class="fa fa-heart-o"
+                                aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                         </p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </div>

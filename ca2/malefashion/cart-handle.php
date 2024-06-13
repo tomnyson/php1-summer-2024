@@ -4,6 +4,10 @@ include_once('./DBUtil.php');
 include_once('./cart.php');
 ini_set('display_errors', '1');
 
+use MailService\MailService as MailService;
+
+require_once('./MailService.php');
+
 $carts =  new Cart();
 $dbHelper = new DBUntil();
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -78,7 +82,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'quantity' => $item['quantity']
             ));
         }
-        $carts->clearCart();
+        $total = $carts->getTotal();
+        $itemRender = "";
+        foreach ($carts->getCart() as $item) {
+            $itemRender .= "<li>$item[name] price: $item[price] quantity: $item[quantity]/</li>";
+        }
+        $html = "
+            <h1>Order Details</h1>
+            <h2>Total: $total</h2>
+            <h2>address: $_POST[address]</h2>
+            <h2>phone: $_POST[phone]</h2>
+            <h2>note: $_POST[note]</h2>
+            <h2>order items</h2>
+            <ul>
+                 $itemRender
+            <ul>
+        ";
+
+        MailService::send(
+            'tabletkindfire@gmail.com',
+            'tabletkindfire@gmail.com',
+            'order list ',
+            $html
+        );
+        // $carts->clearCart();
         header('Location: index.php?view=thankyou');
     }
 }
