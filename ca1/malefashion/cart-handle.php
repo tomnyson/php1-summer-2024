@@ -1,11 +1,13 @@
 <?php
 session_start();
 ini_set('display_errors', '1');
-
+require_once('./config.php');
 require_once('./cart-services.php');
 include_once('./DBUtil.php');
 $carts = new Cart();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+$dbHelper = new DBUntil();
+var_dump($_SERVER['REQUEST_METHOD']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
     $action = $_POST['action'];
     // var_dump($action);
     // die();
@@ -65,9 +67,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
              *  b1: tạo thanh toán url
              */
         }
-
+        $carts->clear();
         // lấy id tự sinh của order
         // lặp cart hiện tại và lưu vào bảng order detail
     }
     header('Location: index.php?view=cart');
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    $vnp_SecureHash = $_GET['vnp_SecureHash'];
+    $inputData = array();
+    $hashData = "";
+    foreach ($_GET as $key => $value) {
+        if (substr($key, 0, 4) == "vnp_") {
+            $inputData[$key] = $value;
+        }
+    }
+    unset($inputData['vnp_SecureHashType']);
+    unset($inputData['vnp_SecureHash']);
+    ksort($inputData);
+
+    foreach ($inputData as $key => $value) {
+        $hashData .= urlencode($key) . '=' . urlencode($value) . '&';
+    }
+    $hashData = rtrim($hashData, '&');
+    $secureHash = hash_hmac('sha512', $hashData, VNPAY_HASH_SECRET);
+
+    if ($secureHash == $vnp_SecureHash) {
+        if ($_GET['vnp_ResponseCode'] == '00') {
+            $orderId =  (int)$_GET['vnp_TxnRef'];
+            // update status
+            $dbHelper->update(
+                'orders',
+                array('status' => 1),
+                "id=$orderId"
+            );
+            $carts->clear();
+            header('Location: index.php?view=order_success');
+        } else {
+            // Payment failed
+            echo "failed";
+        }
+    } else {
+        // Invalid hash
+        echo "invalid hash";
+    }
 }

@@ -1,12 +1,19 @@
 <?php
 session_start();
 ob_start();
+include_once('./DBUtil.php');
+require_once('./cart-services.php');
+$carts = new Cart();
 include_once('./includes/header.php');
-include_once('./includes/menu.php')
+include_once('./includes/menu.php');
+
+
+
+
 ?>
 <div class="col-md-12">
     <?php
-    include_once('./DBUtil.php');
+
 
     $view = isset($_GET['view']) ? $_GET['view'] : 'index';
     switch ($view) {
@@ -25,6 +32,11 @@ include_once('./includes/menu.php')
         case "login":
             include_once('./auth/login.php');
             break;
+        case "order_success":
+            include_once('./order_success.php');
+            break;
+        case "user_profile":
+            include_once('./order_profile.php');
     }
     ?>
 

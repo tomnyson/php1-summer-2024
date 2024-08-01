@@ -19,7 +19,7 @@
         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
         <a href="#"><img src="img/icon/heart.png" alt=""></a>
         <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-        <div class="price">$0.00</div>
+        <div class="price">$</div>
     </div>
     <div id="mobile-menu-wrap"></div>
     <div class="offcanvas__text">
@@ -94,8 +94,9 @@
                 <div class="header__nav__option">
                     <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                     <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                    <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                    <div class="price">$0.00</div>
+                    <a href="index.php?view=cart"><img src="img/icon/cart.png" alt="">
+                        <span><?php echo count($carts->getCart()); ?></span></a>
+                    <div class="price">$<?php echo $carts->getTotal(); ?></div>
                 </div>
             </div>
         </div>

@@ -1,8 +1,5 @@
 <?php
-define("VNPAY_TMN_CODE", "ZSZIOE9N");
-define("VNPAY_HASH_SECRET", "JOFUVFLCWAIJCIHEBVPVWOGVESWVVVBW");
-define("VNPAY_URL", "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html");
-define("VNPAY_RETURN_URL", "http://localhost?view=shop_list");
+require_once('./config.php');
 
 function convertToDateTime($dateString)
 {
@@ -17,8 +14,6 @@ function convertToDateTime($dateString)
 }
 class PaymentService
 {
-
-
 
     static public function createUrlPayment($orderId = "130130", $total = 3103103)
     {
